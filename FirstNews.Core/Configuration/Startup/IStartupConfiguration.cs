@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using FirstNews.Core.Application.Features;
 using FirstNews.Core.Auditing;
-using FirstNews.Core.BackgroundJobs;
 using FirstNews.Core.IoC;
 using FirstNews.Core.Domain.Uow;
 using FirstNews.Core.EntityHistory;
-using FirstNews.Core.Events.Bus;
-using FirstNews.Core.Notifications;
 using FirstNews.Core.Resources.Embedded;
 using FirstNews.Core.Runtime.Caching.Configuration;
 
@@ -89,16 +86,6 @@ namespace FirstNews.Core.Configuration.Startup
         /// Used to configure features.
         /// </summary>
         IFeatureConfiguration Features { get; }
-
-        /// <summary>
-        /// Used to configure background job system.
-        /// </summary>
-        IBackgroundJobConfiguration BackgroundJobs { get; }
-
-        /// <summary>
-        /// Used to configure notification system.
-        /// </summary>
-        INotificationConfiguration Notifications { get; }
 
         /// <summary>
         /// Used to configure embedded resources.

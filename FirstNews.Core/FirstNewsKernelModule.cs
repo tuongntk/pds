@@ -6,7 +6,6 @@ using FirstNews.Core.Application.Navigation;
 using FirstNews.Core.Application.Services;
 using FirstNews.Core.Auditing;
 using FirstNews.Core.Authorization;
-using FirstNews.Core.BackgroundJobs;
 using FirstNews.Core.Collections.Extensions;
 using FirstNews.Core.Configuration;
 using FirstNews.Core.Configuration.Startup;
@@ -20,7 +19,6 @@ using FirstNews.Core.Localization.Dictionaries.Xml;
 using FirstNews.Core.Modules;
 using FirstNews.Core.MultiTenancy;
 using FirstNews.Core.Net.Mail;
-using FirstNews.Core.Notifications;
 using FirstNews.Core.Reflection.Extensions;
 using FirstNews.Core.Runtime;
 using FirstNews.Core.Runtime.Caching;
@@ -33,10 +31,8 @@ using Castle.MicroKernel.Registration;
 
 namespace FirstNews.Core
 {
-    /// <summary>
-    /// Kernel (core) module of the ABP system.
-    /// No need to depend on this, it's automatically the first module always.
-    /// </summary>
+    // Kernel (core) module of the system.
+    // No need to depend on this, it's automatically the first module always.
     public sealed class FirstNewsKernelModule : FirstNewsModule
     {
         public override void PreInitialize()
@@ -81,23 +77,11 @@ namespace FirstNews.Core
             IocManager.Resolve<FeatureManager>().Initialize();
             IocManager.Resolve<PermissionManager>().Initialize();
             IocManager.Resolve<LocalizationManager>().Initialize();
-            IocManager.Resolve<NotificationDefinitionManager>().Initialize();
             IocManager.Resolve<NavigationManager>().Initialize();
-
-            if (Configuration.BackgroundJobs.IsJobExecutionEnabled)
-            {
-                var workerManager = IocManager.Resolve<IBackgroundWorkerManager>();
-                workerManager.Start();
-                workerManager.Add(IocManager.Resolve<IBackgroundJobManager>());
-            }
         }
 
         public override void Shutdown()
         {
-            if (Configuration.BackgroundJobs.IsJobExecutionEnabled)
-            {
-                IocManager.Resolve<IBackgroundWorkerManager>().StopAndWaitToStop();
-            }
         }
 
         private void AddUnitOfWorkFilters()
@@ -111,7 +95,6 @@ namespace FirstNews.Core
         {
             Configuration.Settings.Providers.Add<LocalizationSettingProvider>();
             Configuration.Settings.Providers.Add<EmailSettingProvider>();
-            Configuration.Settings.Providers.Add<NotificationSettingProvider>();
             Configuration.Settings.Providers.Add<TimingSettingProvider>();
         }
 
@@ -195,22 +178,11 @@ namespace FirstNews.Core
             IocManager.RegisterIfNot<IUnitOfWork, NullUnitOfWork>(DependencyLifeStyle.Transient);
             IocManager.RegisterIfNot<IAuditingStore, SimpleLogAuditingStore>(DependencyLifeStyle.Singleton);
             IocManager.RegisterIfNot<IPermissionChecker, NullPermissionChecker>(DependencyLifeStyle.Singleton);
-            IocManager.RegisterIfNot<IRealTimeNotifier, NullRealTimeNotifier>(DependencyLifeStyle.Singleton);
-            IocManager.RegisterIfNot<INotificationStore, NullNotificationStore>(DependencyLifeStyle.Singleton);
             IocManager.RegisterIfNot<IUnitOfWorkFilterExecuter, NullUnitOfWorkFilterExecuter>(DependencyLifeStyle.Singleton);
             IocManager.RegisterIfNot<IClientInfoProvider, NullClientInfoProvider>(DependencyLifeStyle.Singleton);
             IocManager.RegisterIfNot<ITenantStore, NullTenantStore>(DependencyLifeStyle.Singleton);
             IocManager.RegisterIfNot<ITenantResolverCache, NullTenantResolverCache>(DependencyLifeStyle.Singleton);
             IocManager.RegisterIfNot<IEntityHistoryStore, NullEntityHistoryStore>(DependencyLifeStyle.Singleton);
-
-            if (Configuration.BackgroundJobs.IsJobExecutionEnabled)
-            {
-                IocManager.RegisterIfNot<IBackgroundJobStore, InMemoryBackgroundJobStore>(DependencyLifeStyle.Singleton);
-            }
-            else
-            {
-                IocManager.RegisterIfNot<IBackgroundJobStore, NullBackgroundJobStore>(DependencyLifeStyle.Singleton);
-            }
         }
     }
 }

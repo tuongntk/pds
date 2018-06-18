@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FirstNews.Core.Application.Features;
 using FirstNews.Core.Auditing;
-using FirstNews.Core.BackgroundJobs;
 using FirstNews.Core.EntityHistory;
-using FirstNews.Core.Notifications;
 using FirstNews.Core.Resources.Embedded;
 using FirstNews.Core.Runtime.Caching.Configuration;
 using FirstNews.Core.IoC;
@@ -34,10 +32,6 @@ namespace FirstNews.Core.Configuration.Startup
         public IUnitOfWorkDefaultOptions UnitOfWork { get; private set; }
 
         public IFeatureConfiguration Features { get; private set; }
-
-        public IBackgroundJobConfiguration BackgroundJobs { get; private set; }
-
-        public INotificationConfiguration Notifications { get; private set; }
 
         public INavigationConfiguration Navigation { get; private set; }
 
@@ -93,8 +87,6 @@ namespace FirstNews.Core.Configuration.Startup
             MultiTenancy = IocManager.Resolve<IMultiTenancyConfig>();
             Auditing = IocManager.Resolve<IAuditingConfiguration>();
             Caching = IocManager.Resolve<ICachingConfiguration>();
-            BackgroundJobs = IocManager.Resolve<IBackgroundJobConfiguration>();
-            Notifications = IocManager.Resolve<INotificationConfiguration>();
             EmbeddedResources = IocManager.Resolve<IEmbeddedResourcesConfiguration>();
             EntityHistory = IocManager.Resolve<IEntityHistoryConfiguration>();
 
