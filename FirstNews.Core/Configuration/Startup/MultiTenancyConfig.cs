@@ -3,15 +3,10 @@ using FirstNews.Core.MultiTenancy;
 
 namespace FirstNews.Core.Configuration.Startup
 {
-    /// <summary>
-    /// Used to configure multi-tenancy.
-    /// </summary>
     internal class MultiTenancyConfig : IMultiTenancyConfig
     {
-        /// <summary>
-        /// Is multi-tenancy enabled?
-        /// Default value: false.
-        /// </summary>
+        // Is multi-tenancy enabled?
+        // Default value: false.
         public bool IsEnabled { get; set; }
 
         public ITypeList<ITenantResolveContributor> Resolvers { get; }
