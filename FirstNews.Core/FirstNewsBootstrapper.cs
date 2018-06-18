@@ -45,7 +45,7 @@ namespace Abp
         /// </summary>
         protected bool IsDisposed;
 
-        private AbpModuleManager _moduleManager;
+        private FirstNewsModuleManager _moduleManager;
         private ILogger _logger;
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Abp
                 IocManager.Resolve<AbpPlugInManager>().PlugInSources.AddRange(PlugInSources);
                 IocManager.Resolve<StartupConfiguration>().Initialize();
 
-                _moduleManager = IocManager.Resolve<AbpModuleManager>();
+                _moduleManager = IocManager.Resolve<FirstNewsModuleManager>();
                 _moduleManager.Initialize(StartupModule);
                 _moduleManager.StartModules();
             }

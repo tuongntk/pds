@@ -9,7 +9,7 @@ namespace FirstNews.Core.Modules
     /// <summary>
     /// Used to store all needed information for a module.
     /// </summary>
-    public class AbpModuleInfo
+    public class FirstNewsModuleInfo
     {
         /// <summary>
         /// The assembly which contains the module definition.
@@ -34,12 +34,12 @@ namespace FirstNews.Core.Modules
         /// <summary>
         /// All dependent modules of this module.
         /// </summary>
-        public List<AbpModuleInfo> Dependencies { get; }
+        public List<FirstNewsModuleInfo> Dependencies { get; }
 
         /// <summary>
         /// Creates a new AbpModuleInfo object.
         /// </summary>
-        public AbpModuleInfo([NotNull] Type type, [NotNull] FirstNewsModule instance, bool isLoadedAsPlugIn)
+        public FirstNewsModuleInfo([NotNull] Type type, [NotNull] FirstNewsModule instance, bool isLoadedAsPlugIn)
         {
             Check.NotNull(type, nameof(type));
             Check.NotNull(instance, nameof(instance));
@@ -49,7 +49,7 @@ namespace FirstNews.Core.Modules
             IsLoadedAsPlugIn = isLoadedAsPlugIn;
             Assembly = Type.GetTypeInfo().Assembly;
 
-            Dependencies = new List<AbpModuleInfo>();
+            Dependencies = new List<FirstNewsModuleInfo>();
         }
 
         public override string ToString()

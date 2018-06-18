@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace FirstNews.Core.Modules
 {
-    public interface IAbpModuleManager
+    public interface IFirstNewsModuleManager
     {
-        AbpModuleInfo StartupModule { get; }
+        FirstNewsModuleInfo StartupModule { get; }
 
-        IReadOnlyList<AbpModuleInfo> Modules { get; }
+        IReadOnlyList<FirstNewsModuleInfo> Modules { get; }
 
         void Initialize(Type startupModule);
 

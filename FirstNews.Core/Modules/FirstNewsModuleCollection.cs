@@ -8,11 +8,11 @@ namespace FirstNews.Core.Modules
     /// <summary>
     /// Used to store AbpModuleInfo objects as a dictionary.
     /// </summary>
-    internal class AbpModuleCollection : List<AbpModuleInfo>
+    internal class FirstNewsModuleCollection : List<FirstNewsModuleInfo>
     {
         public Type StartupModuleType { get; }
 
-        public AbpModuleCollection(Type startupModuleType)
+        public FirstNewsModuleCollection(Type startupModuleType)
         {
             StartupModuleType = startupModuleType;
         }
@@ -38,7 +38,7 @@ namespace FirstNews.Core.Modules
         /// If module A depends on module B, A comes after B in the returned List.
         /// </summary>
         /// <returns>Sorted list</returns>
-        public List<AbpModuleInfo> GetSortedModuleListByDependency()
+        public List<FirstNewsModuleInfo> GetSortedModuleListByDependency()
         {
             var sortedModules = this.SortByDependencies(x => x.Dependencies);
             EnsureKernelModuleToBeFirst(sortedModules);
@@ -46,7 +46,7 @@ namespace FirstNews.Core.Modules
             return sortedModules;
         }
 
-        public static void EnsureKernelModuleToBeFirst(List<AbpModuleInfo> modules)
+        public static void EnsureKernelModuleToBeFirst(List<FirstNewsModuleInfo> modules)
         {
             var kernelModuleIndex = modules.FindIndex(m => m.Type == typeof(FirstNewsKernelModule));
             if (kernelModuleIndex <= 0)
@@ -60,7 +60,7 @@ namespace FirstNews.Core.Modules
             modules.Insert(0, kernelModule);
         }
 
-        public static void EnsureStartupModuleToBeLast(List<AbpModuleInfo> modules, Type startupModuleType)
+        public static void EnsureStartupModuleToBeLast(List<FirstNewsModuleInfo> modules, Type startupModuleType)
         {
             var startupModuleIndex = modules.FindIndex(m => m.Type == startupModuleType);
             if (startupModuleIndex >= modules.Count - 1)

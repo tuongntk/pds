@@ -13,20 +13,20 @@ namespace FirstNews.Core.Modules
     /// <summary>
     /// This class is used to manage modules.
     /// </summary>
-    public class AbpModuleManager : IAbpModuleManager
+    public class FirstNewsModuleManager : IFirstNewsModuleManager
     {
-        public AbpModuleInfo StartupModule { get; private set; }
+        public FirstNewsModuleInfo StartupModule { get; private set; }
 
-        public IReadOnlyList<AbpModuleInfo> Modules => _modules.ToImmutableList();
+        public IReadOnlyList<FirstNewsModuleInfo> Modules => _modules.ToImmutableList();
 
         public ILogger Logger { get; set; }
 
-        private AbpModuleCollection _modules;
+        private FirstNewsModuleCollection _modules;
 
         private readonly IIocManager _iocManager;
         private readonly IAbpPlugInManager _abpPlugInManager;
 
-        public AbpModuleManager(IIocManager iocManager, IAbpPlugInManager abpPlugInManager)
+        public FirstNewsModuleManager(IIocManager iocManager, IAbpPlugInManager abpPlugInManager)
         {
             _iocManager = iocManager;
             _abpPlugInManager = abpPlugInManager;
@@ -36,7 +36,7 @@ namespace FirstNews.Core.Modules
 
         public virtual void Initialize(Type startupModule)
         {
-            _modules = new AbpModuleCollection(startupModule);
+            _modules = new FirstNewsModuleCollection(startupModule);
             LoadAllModules();
         }
 
@@ -109,7 +109,7 @@ namespace FirstNews.Core.Modules
                 moduleObject.IocManager = _iocManager;
                 moduleObject.Configuration = _iocManager.Resolve<IStartupConfiguration>();
 
-                var moduleInfo = new AbpModuleInfo(moduleType, moduleObject, plugInModuleTypes.Contains(moduleType));
+                var moduleInfo = new FirstNewsModuleInfo(moduleType, moduleObject, plugInModuleTypes.Contains(moduleType));
 
                 _modules.Add(moduleInfo);
 

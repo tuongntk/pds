@@ -7,9 +7,9 @@ namespace FirstNews.Core.Reflection
 {
     public class AssemblyFinder : IAssemblyFinder
     {
-        private readonly IAbpModuleManager _moduleManager;
+        private readonly IFirstNewsModuleManager _moduleManager;
 
-        public AssemblyFinder(IAbpModuleManager moduleManager)
+        public AssemblyFinder(IFirstNewsModuleManager moduleManager)
         {
             _moduleManager = moduleManager;
         }
